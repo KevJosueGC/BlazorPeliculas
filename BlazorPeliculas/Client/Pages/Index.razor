@@ -1,0 +1,38 @@
+﻿@page "/"
+@inject IRepositorio repositorio
+
+
+<div>
+    <button @onclick="LimpiarPeliculas">Limpiar películas</button>
+</div>
+<div>
+    <h3>LISTADO DE PELICULAS</h3>
+    <ListadoPeliculas @ref="listadoPeliculas" Peliculas="Peliculas" />
+</div>
+<div>
+    <button @onclick="AgregarPelicula">Agregar Pelicula</button>
+</div>
+
+@*<BindGetSetDemo />*@
+@*<BindAfterDemo />*@
+
+@code {
+    public List<Pelicula> Peliculas { get; set; } = null!;
+
+    public ListadoPeliculas? listadoPeliculas;
+
+    protected override void OnInitialized()
+    {
+        Peliculas = repositorio.ObtenerPeliculas();
+    }
+
+    private void LimpiarPeliculas()
+    {
+        listadoPeliculas!.LimpiarPeliculas();
+    }
+
+    private void AgregarPelicula()
+    {
+        Peliculas.Add(new Pelicula { Nombre = "Jurassic Park", FechaLanzamiento = DateTime.Today });
+    }
+}
